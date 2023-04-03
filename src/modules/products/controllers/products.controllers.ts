@@ -1,10 +1,11 @@
-import { Controller, Get, HttpStatus } from '@nestjs/common';
+import { Get, HttpStatus } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { ApiGetProductsModel } from '@modules/products/models/api-get-products.model';
-import { ProductsService } from '@modules/products/services/products.service';
+import { ProductsController as Controller } from '../decorators';
+import { ApiGetProductsModel } from '../models';
+import { ProductsService } from '../services';
 
-@Controller('products')
+@Controller()
 @ApiTags('products')
 export class ProductsControllers {
   constructor(private readonly _productsService: ProductsService) {}

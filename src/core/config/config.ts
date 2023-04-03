@@ -51,6 +51,10 @@ export class Config {
     return +this._env.HASH_SALT;
   }
 
+  get hashKeyForJwtToken(): string {
+    return this._env.JWT_SECRET;
+  }
+
   get environment(): EnvironmentType {
     return this._env.NODE_ENV as EnvironmentType;
   }

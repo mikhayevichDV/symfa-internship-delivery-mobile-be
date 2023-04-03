@@ -1,16 +1,17 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
+import { Body, HttpStatus, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { RegisterService } from '@modules/register/services';
+import { UserDto } from '@shared/user/models';
 
-import { UserDto } from '../models';
+import { RegisterController as Controller } from '../decorators';
 
 @Controller()
 @ApiTags('register')
 export class RegisterController {
   constructor(private _registerService: RegisterService) {}
 
-  @Post('registration')
+  @Post()
   @ApiResponse({
     status: HttpStatus.OK,
   })

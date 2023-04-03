@@ -4,9 +4,8 @@ import { Repository } from 'typeorm';
 
 import { Config } from '@core/config';
 import { UserEntity } from '@entities/users';
-import { UserDto } from '@modules/register/models';
 
-import { UserEditDto } from '../models';
+import { UserDto, UserEditDto } from '../models';
 
 import * as bcrypt from 'bcrypt';
 
@@ -48,5 +47,15 @@ export class UserService {
     const { userId } = await queryBuilder.getOne();
 
     return userId;
+  }
+
+  async _getUserById(inputId: any): Promise<UserEntity> {
+    const user = this._userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.avatar', 'avatar')
+      .where('user.id = :id', { id: inputId })
+      .getOne();
+
+    return user;
   }
 }
