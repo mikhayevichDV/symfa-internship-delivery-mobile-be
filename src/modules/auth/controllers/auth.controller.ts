@@ -1,8 +1,9 @@
-import { Body, Get, Post } from '@nestjs/common';
+import { Body, Get, Post, Request } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserEntity } from '@entities/users';
 import { AuthService } from '@modules/auth/services';
+import { IsAuthenticated } from '@shared/user/decorators';
 
 import { AuthControllerDecorator as Controller } from '../decorators';
 import { ApiAuthResponseModel, LoginUserDto } from '../models';
@@ -21,5 +22,11 @@ export class AuthController {
   @Get('users')
   async getAllUsers(): Promise<UserEntity[]> {
     return this._authService.getAllUsers();
+  }
+
+  @IsAuthenticated()
+  @Get('profile')
+  getProfile(@Request() req: any) {
+    return req.user;
   }
 }
