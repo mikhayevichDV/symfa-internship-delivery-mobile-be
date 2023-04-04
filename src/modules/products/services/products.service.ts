@@ -25,4 +25,22 @@ export class ProductsService {
 
     return queryBuilder.getMany();
   }
+
+  async getProductsByType(type: string): Promise<ProductEntity[]> {
+    const queryBuilder = this._productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.photo', 'photo')
+      .where('product.type = :type', { type: type });
+
+    return queryBuilder.getMany();
+  }
+
+  async getProductsByFlavourType(flavourType: string): Promise<ProductEntity[]> {
+    const queryBuilder = this._productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.photo', 'photo')
+      .where('product.flavourType = :flavourType', { flavourType: flavourType });
+
+    return queryBuilder.getMany();
+  }
 }

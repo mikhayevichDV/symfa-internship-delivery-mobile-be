@@ -7,7 +7,7 @@ import { UserDto } from '@shared/user/models';
 import { RegisterController as Controller } from '../decorators';
 
 @Controller()
-@ApiTags('register')
+@ApiTags('Registration')
 export class RegisterController {
   constructor(private _registerService: RegisterService) {}
 

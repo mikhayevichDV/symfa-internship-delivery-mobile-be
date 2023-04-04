@@ -1,5 +1,6 @@
 import { DeepPartial } from 'typeorm';
 
+import { ProductEntity } from '@entities/product';
 import { UserEntity } from '@entities/users';
 import { AbstractLoader, IRelationsOptions } from '@fixtures/abstract-loader';
 import { USERS_FIXTURES } from '@fixtures/dev/data/users';
@@ -12,5 +13,10 @@ export class UsersLoader extends AbstractLoader<UserEntity> {
 
   environments: EnvironmentType[] = [EnvironmentType.Development];
 
-  relations: IRelationsOptions[] = [];
+  relations: Array<IRelationsOptions<ProductEntity, UserEntity>> = [
+    {
+      relativeEntity: ProductEntity,
+      relationKey: 'favoriteProducts',
+    },
+  ];
 }

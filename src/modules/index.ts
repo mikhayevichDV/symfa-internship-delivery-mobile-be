@@ -1,5 +1,5 @@
-import { AuthModule } from '@modules/auth/auth.module';
-import { ProductsModule } from '@modules/products/products.module';
-import { RegisterModule } from '@modules/register/register.module';
+import { AuthModule } from './auth';
+import { ProductsModule } from './products';
+import { RegisterModule } from './register';
 
 export const APP_MODULES = [RegisterModule, ProductsModule, AuthModule];

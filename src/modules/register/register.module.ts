@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { RegisterController } from '@modules/register/controllers/register.controller';
-import { RegisterService } from '@modules/register/services';
+import { RegisterController } from './controllers';
+import { RegisterService } from './services';
 
 @Module({
   controllers: [RegisterController],
