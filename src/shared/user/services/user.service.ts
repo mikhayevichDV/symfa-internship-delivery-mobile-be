@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Config } from '@core/config';
+import { ProductEntity } from '@entities/product';
 import { UserEntity } from '@entities/users';
 
 import { UserDto, UserEditDto } from '../models';
@@ -14,6 +15,8 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private _userRepository: Repository<UserEntity>,
+    @InjectRepository(ProductEntity)
+    private _productRepository: Repository<ProductEntity>,
   ) {}
 
   async create({ password: plainPassword, email, ...userData }: UserDto) {
@@ -31,12 +34,31 @@ export class UserService {
 
       return user;
     } catch (error) {
-      throw new BadRequestException('user with that email already exists');
+      throw new BadRequestException(`${error}`);
     }
   }
 
   async update(id: string, { avatarId, ...userData }: UserEditDto) {
     await this._userRepository.update(id, { ...userData, avatar: { id: avatarId } });
+  }
+
+  async getFavoriteProducts(userId: string): Promise<UserEntity[]> {
+    const products = await this._userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.favoriteProducts', 'products')
+      .leftJoinAndSelect('products.photo', 'photo')
+      .where('user.id = :id', { id: userId })
+      .getMany();
+
+    return products;
+  }
+
+  async addFavoriteProduct(userId: string, productId: string): Promise<void> {
+    const user = await this._userRepository.findOne({ where: { id: userId }, relations: ['favoriteProducts'] });
+
+    user.favoriteProducts.push({ id: productId } as unknown as ProductEntity);
+
+    await this._userRepository.save(user);
   }
 
   private async _getLastUserId(repository: Repository<UserEntity>): Promise<string> {
@@ -49,7 +71,7 @@ export class UserService {
     return userId;
   }
 
-  async _getUserById(inputId: any): Promise<UserEntity> {
+  async _getUserById(inputId: string): Promise<UserEntity> {
     const user = this._userRepository
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.avatar', 'avatar')

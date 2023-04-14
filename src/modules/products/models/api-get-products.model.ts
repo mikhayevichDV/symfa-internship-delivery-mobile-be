@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 
 import { ProductPhotoEntity } from '@entities/product-photo';
 import { UserEntity } from '@entities/users';
@@ -35,6 +35,11 @@ export class ApiGetProductsModel {
   rating: number;
 
   @ApiProperty({
+    example: '25',
+  })
+  deliveryTime: number;
+
+  @ApiProperty({
     example: '14',
   })
   price: number;
@@ -55,3 +60,5 @@ export class ApiGetProductsModel {
   })
   users: UserEntity[];
 }
+
+export class TestDto extends OmitType(ApiGetProductsModel, ['id', 'users']) {}
