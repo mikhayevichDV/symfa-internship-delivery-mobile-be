@@ -11,8 +11,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: 'c63e3ece-e06c-4c71-836e-515cb188e33b',
     },
-    name: 'Ivan',
-    surname: 'Ivanov',
+    username: 'Ivanov',
     email: 'ivanov@gmail.com',
     address: 'Lomonosova 5',
     role: UserRole.Client,
@@ -32,8 +31,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: '6565fc4b-5b66-4e03-a36f-40989a1f8788',
     },
-    name: 'Darya',
-    surname: 'Petrova',
+    username: 'Petrova',
     email: 'petrov@gmail.com',
     address: 'Aladovyh 16',
     role: UserRole.Client,
@@ -53,8 +51,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: '1723b058-c217-4949-88b6-f98eb82be186',
     },
-    name: 'David',
-    surname: 'Johnson',
+    username: 'Johnson',
     email: 'johnson@gmail.com',
     address: 'Razinskaya 1',
     role: UserRole.Client,
@@ -74,8 +71,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: '5780ebef-8760-4be2-b360-13cf7ee20782',
     },
-    name: 'Alex',
-    surname: 'Brown',
+    username: 'Brown',
     email: 'brown@gmail.com',
     address: 'Molodezhnaya 13',
     role: UserRole.Client,
@@ -95,8 +91,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: 'e7009459-2bb1-45f2-bbbe-f9bb2dbd7ead',
     },
-    name: 'Gabriel',
-    surname: 'Hall',
+    username: 'Hall',
     email: 'hall@gmail.com',
     address: 'Vavilova 27',
     role: UserRole.Client,
@@ -116,8 +111,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: 'ad24c9a2-11f9-401d-8881-523c5e663d14',
     },
-    name: 'Isabella',
-    surname: 'Perez',
+    username: 'Perez',
     email: 'perez@gmail.com',
     address: 'Detskaya 33',
     role: UserRole.Client,
@@ -137,8 +131,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: 'cb3f7a6a-de73-4ca8-926e-b37d5bdfb531',
     },
-    name: 'Caleb',
-    surname: 'King',
+    username: 'King',
     email: 'king@gmail.com',
     address: 'Fomina 9',
     role: UserRole.Client,
@@ -158,8 +151,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: 'fb1e0852-4fc3-4ba8-a16c-7b1c44af107c',
     },
-    name: 'Lily',
-    surname: 'Wright',
+    username: 'Wright',
     email: 'wright@gmail.com',
     address: 'Vysokaya 10',
     role: UserRole.Client,
@@ -179,8 +171,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: '8e19d8ec-c40d-4008-ac9c-1dd6674daa0b',
     },
-    name: 'Nadezhda',
-    surname: 'Zhigimont',
+    username: 'Zhigimont',
     email: 'zhigimont@gmail.com',
     address: 'Kizhevatova 1',
     role: UserRole.Client,
@@ -200,8 +191,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     avatar: {
       id: 'a527eab2-9dea-4c9c-a991-1377f5d66a17',
     },
-    name: 'Mark',
-    surname: 'Evans',
+    username: 'Evans',
     email: 'evans@gmail.com',
     address: 'Vostochnaya 38',
     role: UserRole.Client,

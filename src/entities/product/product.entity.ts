@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, OneToOne } from 'typeorm';
 
 import { BaseEntity } from '@entities/common';
 import { ProductPhotoEntity } from '@entities/product-photo';
@@ -12,7 +12,7 @@ export class ProductEntity extends BaseEntity {
   @Column({ type: 'varchar', name: 'type' })
   type: string;
 
-  @Column({ type: 'varchar', name: 'flavor type' })
+  @Column({ type: 'varchar', name: 'flavor_type' })
   flavourType: string;
 
   @Column({ type: 'varchar', name: 'description' })
@@ -20,6 +20,9 @@ export class ProductEntity extends BaseEntity {
 
   @Column({ type: 'float', name: 'rating' })
   rating: number;
+
+  @Column({ type: 'float', name: 'delivery_time' })
+  deliveryTime: number;
 
   @Column({ type: 'float', name: 'price' })
   price: number;
@@ -29,6 +32,5 @@ export class ProductEntity extends BaseEntity {
   photo: ProductPhotoEntity;
 
   @ManyToMany(() => UserEntity, (users: UserEntity) => users.favoriteProducts)
-  @JoinTable()
   users: UserEntity[];
 }

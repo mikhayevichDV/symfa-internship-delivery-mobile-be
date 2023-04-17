@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne } from 'typeorm';
 
 import { BaseEntity } from '@entities/common';
 import { ProductEntity } from '@entities/product';
@@ -11,10 +11,7 @@ export class UserEntity extends BaseEntity {
   userId: string;
 
   @Column({ type: 'varchar', name: 'name' })
-  name: string;
-
-  @Column({ type: 'varchar', name: 'surname' })
-  surname: string;
+  username: string;
 
   @Column({ type: 'varchar', name: 'email', unique: true })
   email: string;
@@ -22,8 +19,8 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar', name: 'password', select: false })
   password: string;
 
-  @Column({ type: 'varchar', name: 'address' })
-  address: string;
+  @Column({ type: 'varchar', name: 'address', default: null })
+  address: string | null;
 
   @Column({ type: 'enum', name: 'user_role', enum: UserRole, default: UserRole.Client })
   role: UserRole;
@@ -33,5 +30,6 @@ export class UserEntity extends BaseEntity {
   avatar: UserAvatarEntity;
 
   @ManyToMany(() => ProductEntity, (products: ProductEntity) => products.users)
+  @JoinTable()
   favoriteProducts: ProductEntity[];
 }

@@ -8,8 +8,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Chicken kebab',
     type: 'Fast food',
     flavourType: 'Spicy',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 25,
     price: 10.4,
     photo: {
       id: '7e6c8965-9b6d-4964-8c15-01d426323a14',
@@ -25,8 +27,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Chicken with vegetables',
     type: 'Fast food',
     flavourType: 'Sour',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 35,
     price: 10.4,
     photo: {
       id: 'ec114e9d-ae1f-41f7-acf2-c2cd6e91aae9',
@@ -45,8 +49,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Chinese salad',
     type: 'Vegetarian',
     flavourType: 'Spicy',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 40,
     price: 10.4,
     photo: {
       id: 'f2e46957-e345-43df-bc4f-fe857a6f2c1d',
@@ -65,8 +71,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Fish with pomegranate',
     type: 'Fish',
     flavourType: 'Sweet',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 3,
+    deliveryTime: 34,
     price: 10,
     photo: {
       id: 'c0cdb54d-8c61-4d48-a3d6-dd860c0835b7',
@@ -85,8 +93,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'For vegetarian',
     type: 'Vegetarian',
     flavourType: 'Salty',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4,
+    deliveryTime: 55,
     price: 1,
     photo: {
       id: '4dda48bd-eb54-417f-a018-c3f3988fe210',
@@ -105,8 +115,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Fried fish',
     type: 'Fish',
     flavourType: 'Salty',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 39,
     price: 10.4,
     photo: {
       id: 'db708730-b491-4513-a65e-ca483b667e45',
@@ -125,8 +137,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Fried salmon',
     type: 'Fish',
     flavourType: 'Sour',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 51,
     price: 14,
     photo: {
       id: 'e7e49a39-6238-41a3-9f51-d5454f50957c',
@@ -145,8 +159,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Meatballs and fries',
     type: 'Meat',
     flavourType: 'Salty',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 46,
     price: 10.4,
     photo: {
       id: '09eb1a13-0a73-4cab-a1dc-1c6d6f109666',
@@ -165,8 +181,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Meat with fries',
     type: 'Meat',
     flavourType: 'Spicy',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 48,
     price: 10.4,
     photo: {
       id: '7af188b8-222f-47a9-8b26-8ca1cce5da43',
@@ -185,8 +203,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Shashlik',
     type: 'Fast food',
     flavourType: 'Spicy',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 60,
     price: 10.4,
     photo: {
       id: 'c3788634-b00a-4803-88bb-1cd13a6578bd',
@@ -205,8 +225,10 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     title: 'Spaghetti',
     type: 'Italian',
     flavourType: 'Sour',
-    description: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
+    deliveryTime: 44,
     price: 10.4,
     photo: {
       id: '6d8bd06d-421a-4ec9-92b2-4090cfeed989',
