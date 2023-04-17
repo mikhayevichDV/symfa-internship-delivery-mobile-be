@@ -42,25 +42,6 @@ export class UserService {
     await this._userRepository.update(id, { ...userData, avatar: { id: avatarId } });
   }
 
-  async getFavoriteProducts(userId: string): Promise<UserEntity[]> {
-    const products = await this._userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.favoriteProducts', 'products')
-      .leftJoinAndSelect('products.photo', 'photo')
-      .where('user.id = :id', { id: userId })
-      .getMany();
-
-    return products;
-  }
-
-  async addFavoriteProduct(userId: string, productId: string): Promise<void> {
-    const user = await this._userRepository.findOne({ where: { id: userId }, relations: ['favoriteProducts'] });
-
-    user.favoriteProducts.push({ id: productId } as unknown as ProductEntity);
-
-    await this._userRepository.save(user);
-  }
-
   private async _getLastUserId(repository: Repository<UserEntity>): Promise<string> {
     const queryBuilder = repository
       .createQueryBuilder('user')

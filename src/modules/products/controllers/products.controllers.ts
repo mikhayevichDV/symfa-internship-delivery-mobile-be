@@ -1,8 +1,7 @@
-import { Body, Get, HttpStatus, Param, ParseUUIDPipe, Post } from '@nestjs/common';
+import { Get, HttpStatus, Param, ParseUUIDPipe } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { ProductEntity } from '@entities/product';
-import { AwareIdDto } from '@models/dto';
 import { UserService } from '@shared/user/services';
 
 import { ProductsController as Controller } from '../decorators';
@@ -82,25 +81,5 @@ export class ProductsControllers {
   })
   async getProductsByFlavourType(@Param('flavourType') flavourType: string): Promise<ProductEntity[]> {
     return this._productsService.getProductsByFlavourType(flavourType);
-  }
-
-  @Get('favoriteProducts/:id')
-  @ApiResponse({
-    type: ApiGetProductsModel,
-    status: HttpStatus.OK,
-    isArray: true,
-  })
-  async getFavoriteProducts(@Param('id', ParseUUIDPipe) id: string): Promise<any> {
-    return this._userService.getFavoriteProducts(id);
-  }
-
-  @Post('addFavoriteProduct/:id')
-  @ApiResponse({
-    type: ApiGetProductsModel,
-    status: HttpStatus.OK,
-    isArray: true,
-  })
-  async addFavoriteProduct(@Param('id', ParseUUIDPipe) userId: string, @Body() product: AwareIdDto): Promise<any> {
-    return this._userService.addFavoriteProduct(userId, product.id);
   }
 }

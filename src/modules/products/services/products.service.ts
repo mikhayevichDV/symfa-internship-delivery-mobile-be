@@ -24,9 +24,10 @@ export class ProductsService {
         'product.price',
         'photo',
       ])
-      .innerJoin('product.photo', 'photo');
+      .innerJoin('product.photo', 'photo')
+      .getMany();
 
-    return queryBuilder.getMany();
+    return queryBuilder;
   }
 
   async getProductById(id: string) {
