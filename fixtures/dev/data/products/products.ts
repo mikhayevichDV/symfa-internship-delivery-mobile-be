@@ -163,7 +163,7 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
     deliveryTime: 46,
-    price: 10.4,
+    price: 8,
     photo: {
       id: '09eb1a13-0a73-4cab-a1dc-1c6d6f109666',
     },
@@ -207,7 +207,7 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
     deliveryTime: 60,
-    price: 10.4,
+    price: 4,
     photo: {
       id: 'c3788634-b00a-4803-88bb-1cd13a6578bd',
     },
@@ -229,7 +229,7 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus.',
     rating: 4.3,
     deliveryTime: 44,
-    price: 10.4,
+    price: 2,
     photo: {
       id: '6d8bd06d-421a-4ec9-92b2-4090cfeed989',
     },

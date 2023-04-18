@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from 'typeorm';
 
 import { BaseEntity } from '@entities/common';
+import { OrderEntity } from '@entities/order';
 import { ProductEntity } from '@entities/product';
 import { UserAvatarEntity } from '@entities/user-avatar';
 import { UserRole } from '@models/enum';
@@ -32,4 +33,7 @@ export class UserEntity extends BaseEntity {
   @ManyToMany(() => ProductEntity, (products: ProductEntity) => products.users)
   @JoinTable()
   favoriteProducts: ProductEntity[];
+
+  @OneToMany(() => OrderEntity, (order: OrderEntity) => order.user)
+  order: OrderEntity[];
 }

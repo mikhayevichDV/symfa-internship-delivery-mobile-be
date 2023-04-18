@@ -12,7 +12,7 @@ export class FavoriteProductsService {
     private _userRepository: Repository<UserEntity>,
   ) {}
 
-  async getFavoriteProducts(userId: string): Promise<UserEntity[]> {
+  async getFavoriteProducts(userId: string): Promise<any> {
     const products = await this._userRepository
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.favoriteProducts', 'products')
@@ -20,7 +20,30 @@ export class FavoriteProductsService {
       .where('user.id = :id', { id: userId })
       .getMany();
 
-    return products;
+    return products
+      .map((elem: UserEntity) => {
+        return elem.favoriteProducts;
+      })
+      .flat(1);
+  }
+
+  async getFavoriteProductsByFlavourType(userId: string, flavourType: string): Promise<any> {
+    const products = await this._userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.favoriteProducts', 'products')
+      .leftJoinAndSelect('products.photo', 'photo')
+      .where('user.id = :id', { id: userId })
+      .getMany();
+
+    const test = products.map((elem: UserEntity) => {
+      return elem.favoriteProducts;
+    });
+
+    const test2 = test.filter((elem: any) => {
+      return elem['flavourType'] === flavourType;
+    });
+
+    return test2;
   }
 
   async addFavoriteProduct(userId: string, productId: string): Promise<void> {

@@ -12,7 +12,7 @@ import { FavoriteProductsService } from '../services';
 export class FavoriteProductsControllers {
   constructor(private readonly _favoriteProductsService: FavoriteProductsService) {}
 
-  @Get('favoriteProducts/:id')
+  @Get('get/:id')
   @ApiResponse({
     type: ApiGetProductsModel,
     status: HttpStatus.OK,
@@ -22,7 +22,20 @@ export class FavoriteProductsControllers {
     return this._favoriteProductsService.getFavoriteProducts(id);
   }
 
-  @Post('addFavoriteProduct/:id')
+  @Get('get/:flavourType/:id')
+  @ApiResponse({
+    type: ApiGetProductsModel,
+    status: HttpStatus.OK,
+    isArray: true,
+  })
+  async getFavoriteProductsByFlavourType(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('flavourType') flavourType: string,
+  ): Promise<any> {
+    return this._favoriteProductsService.getFavoriteProductsByFlavourType(id, flavourType);
+  }
+
+  @Post('add/:id')
   @ApiResponse({
     type: ApiGetProductsModel,
     status: HttpStatus.OK,
