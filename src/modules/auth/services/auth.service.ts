@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { Config } from '@core/config';
 import { UserEntity } from '@entities/users';
 
 import { ApiAuthResponseModel, LoginUserDto } from '../models';
@@ -45,6 +46,12 @@ export class AuthService {
         createdAt: 'asc',
       },
     });
+  }
+
+  async recoverPassword(email: string, newPassword: string) {
+    const password = await bcrypt.hash(newPassword, Config.get.hashSalt);
+
+    await this._authRepository.update({ email }, { password });
   }
 
   private _generateJwt(user: any): string {

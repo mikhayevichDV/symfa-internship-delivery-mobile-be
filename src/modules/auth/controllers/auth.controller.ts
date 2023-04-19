@@ -1,4 +1,4 @@
-import { Body, Get, Post, Request } from '@nestjs/common';
+import { Body, Get, HttpStatus, Patch, Post, Request } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserEntity } from '@entities/users';
@@ -22,6 +22,15 @@ export class AuthController {
   @Get('users')
   async getAllUsers(): Promise<UserEntity[]> {
     return this._authService.getAllUsers();
+  }
+
+  @Patch('recover')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    isArray: true,
+  })
+  async update(@Body() { email, password }: LoginUserDto) {
+    return this._authService.recoverPassword(email, password);
   }
 
   @IsAuthenticated()
