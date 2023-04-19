@@ -3,12 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { OrderEntity } from '@entities/order';
+import { PromoCodesEntity } from '@entities/promo-codes';
 
 @Injectable()
 export class OrderService {
   constructor(
     @InjectRepository(OrderEntity)
     private _orderRepository: Repository<OrderEntity>,
+    @InjectRepository(PromoCodesEntity)
+    private _promocodesRepository: Repository<PromoCodesEntity>,
   ) {}
 
   async getOrder(userId: string): Promise<any> {
@@ -70,12 +73,12 @@ export class OrderService {
       .where('order.user = :id', { id: userId })
       .getMany();
 
-    const test = order.reduce((prev: any, cur: any) => {
+    const total = order.reduce((prev: number, cur: OrderEntity) => {
       prev += cur.count * cur.product.price;
 
       return prev;
     }, 0);
 
-    return test.toFixed(2);
+    return total.toFixed(2);
   }
 }

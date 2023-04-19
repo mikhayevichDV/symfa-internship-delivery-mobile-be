@@ -146,26 +146,6 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     ],
   },
   {
-    id: '583a8ac5-b3fa-46e3-be94-534481fa9125',
-    userId: 'SC10008',
-    avatar: {
-      id: 'fb1e0852-4fc3-4ba8-a16c-7b1c44af107c',
-    },
-    username: 'Wright',
-    email: 'wright@gmail.com',
-    address: 'Vysokaya 10',
-    role: UserRole.Client,
-    password: DEFAULT_PASSWORD,
-    favoriteProducts: [
-      {
-        id: '6a00671f-1f55-4ff4-857c-ea5bd4556f52',
-      },
-      {
-        id: 'cb2e1214-b016-44ad-ae17-6fcf972af963',
-      },
-    ],
-  },
-  {
     id: '454a0af8-a4c8-4c96-8eaf-427e74f620f1',
     userId: 'SC10009',
     avatar: {
@@ -186,22 +166,42 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     ],
   },
   {
-    id: '54a7a57d-9862-4e9b-bff0-7b189e1c26a6',
-    userId: 'SC10010',
+    id: '794b4a4b-fff0-40fe-9398-f72e92dd2c99',
+    userId: 'SC10011',
     avatar: {
       id: 'a527eab2-9dea-4c9c-a991-1377f5d66a17',
     },
-    username: 'Evans',
-    email: 'evans@gmail.com',
-    address: 'Vostochnaya 38',
-    role: UserRole.Client,
+    username: 'Wright',
+    email: 'wright1@gmail.com',
+    address: 'Vysokaya 10',
+    role: UserRole.Courier,
     password: DEFAULT_PASSWORD,
     favoriteProducts: [
       {
-        id: '1ed7c3d9-b82a-4bdb-9e6f-c10d3bf86230',
+        id: '6a00671f-1f55-4ff4-857c-ea5bd4556f52',
       },
       {
-        id: '9104367f-27c1-417d-97a8-95daa22fbcd4',
+        id: 'cb2e1214-b016-44ad-ae17-6fcf972af963',
+      },
+    ],
+  },
+  {
+    id: '7b279507-8550-4a9e-beb7-49c34791c986',
+    userId: 'SC10012',
+    avatar: {
+      id: 'fb1e0852-4fc3-4ba8-a16c-7b1c44af107c',
+    },
+    username: 'Zhigimont',
+    email: 'zhigimont1@gmail.com',
+    address: 'Kizhevatova 1',
+    role: UserRole.Courier,
+    password: DEFAULT_PASSWORD,
+    favoriteProducts: [
+      {
+        id: 'cb2e1214-b016-44ad-ae17-6fcf972af963',
+      },
+      {
+        id: '1ed7c3d9-b82a-4bdb-9e6f-c10d3bf86230',
       },
     ],
   },

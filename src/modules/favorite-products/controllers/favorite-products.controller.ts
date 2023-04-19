@@ -22,19 +22,6 @@ export class FavoriteProductsControllers {
     return this._favoriteProductsService.getFavoriteProducts(id);
   }
 
-  @Get('get/:flavourType/:id')
-  @ApiResponse({
-    type: ApiGetProductsModel,
-    status: HttpStatus.OK,
-    isArray: true,
-  })
-  async getFavoriteProductsByFlavourType(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Param('flavourType') flavourType: string,
-  ): Promise<any> {
-    return this._favoriteProductsService.getFavoriteProductsByFlavourType(id, flavourType);
-  }
-
   @Post('add/:id')
   @ApiResponse({
     type: ApiGetProductsModel,

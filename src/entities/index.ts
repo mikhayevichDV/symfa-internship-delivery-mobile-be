@@ -1,3 +1,4 @@
+import { HistoryEntity } from './history';
 import { OrderEntity } from './order';
 import { ProductEntity } from './product';
 import { ProductPhotoEntity } from './product-photo';
@@ -11,6 +12,7 @@ export const ENTITIES = [
   ProductPhotoEntity,
   UserAvatarEntity,
   OrderEntity,
+  HistoryEntity,
   PromoCodesEntity,
 ];
 

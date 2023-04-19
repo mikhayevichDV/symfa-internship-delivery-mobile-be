@@ -27,25 +27,6 @@ export class FavoriteProductsService {
       .flat(1);
   }
 
-  async getFavoriteProductsByFlavourType(userId: string, flavourType: string): Promise<any> {
-    const products = await this._userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.favoriteProducts', 'products')
-      .leftJoinAndSelect('products.photo', 'photo')
-      .where('user.id = :id', { id: userId })
-      .getMany();
-
-    const test = products.map((elem: UserEntity) => {
-      return elem.favoriteProducts;
-    });
-
-    const test2 = test.filter((elem: any) => {
-      return elem['flavourType'] === flavourType;
-    });
-
-    return test2;
-  }
-
   async addFavoriteProduct(userId: string, productId: string): Promise<void> {
     const user = await this._userRepository.findOne({ where: { id: userId }, relations: ['favoriteProducts'] });
 

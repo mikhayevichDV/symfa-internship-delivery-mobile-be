@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from 'typeorm';
 
 import { BaseEntity } from '@entities/common';
+import { HistoryEntity } from '@entities/history';
 import { OrderEntity } from '@entities/order';
 import { ProductEntity } from '@entities/product';
 import { UserAvatarEntity } from '@entities/user-avatar';
@@ -36,4 +37,7 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => OrderEntity, (order: OrderEntity) => order.user)
   order: OrderEntity[];
+
+  @OneToOne(() => HistoryEntity, (history: HistoryEntity) => history.user)
+  history: HistoryEntity;
 }
