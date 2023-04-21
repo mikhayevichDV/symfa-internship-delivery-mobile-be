@@ -12,6 +12,11 @@ export class UserDto {
 
   @IsNotEmpty()
   @IsString()
+  @ApiProperty({ example: 'Podnebesnaya st.' })
+  address: string;
+
+  @IsNotEmpty()
+  @IsString()
   @ApiProperty({ example: 'passDima' })
   password: string;
 }

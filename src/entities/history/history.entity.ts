@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 
 import { BaseEntity } from '@entities/common';
 import { UserEntity } from '@entities/users';
@@ -15,10 +15,13 @@ export class HistoryEntity extends BaseEntity {
   @Column({ type: 'varchar', name: 'address' })
   address: string;
 
+  @Column({ type: 'integer', name: 'deliveryTime' })
+  deliveryTime: number;
+
   @Column({ type: 'enum', name: 'status', enum: OrderStatus })
   status: OrderStatus;
 
-  @OneToOne(() => UserEntity, (user: UserEntity) => user.history)
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.history)
   @JoinColumn()
   user: UserEntity;
 

@@ -1,6 +1,7 @@
 import { AuthModule } from './auth';
 import { FavoriteProductsModule } from './favorite-products';
 import { HistoryModule } from './history';
+import { NotificationsModule } from './notifications';
 import { OrderModule } from './order';
 import { ProductsModule } from './products';
 import { PromoCodesModule } from './promo-codes';
@@ -12,6 +13,7 @@ export const APP_MODULES = [
   AuthModule,
   OrderModule,
   HistoryModule,
+  NotificationsModule,
   PromoCodesModule,
   FavoriteProductsModule,
 ];

@@ -1,4 +1,4 @@
-import { Get, HttpStatus } from '@nestjs/common';
+import { Get, HttpStatus, Param } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PromoCodesController as Controller } from '../decorators';
@@ -18,5 +18,15 @@ export class PromoCodesControllers {
   })
   async getAllPromocodes() {
     return this._promocodesService.getAllPromocodes();
+  }
+
+  @Get('code/:code')
+  @ApiResponse({
+    type: ApiGetPromocodesModel,
+    status: HttpStatus.OK,
+    isArray: true,
+  })
+  async getPromocode(@Param('code') code: string) {
+    return this._promocodesService.getPromocode(code);
   }
 }

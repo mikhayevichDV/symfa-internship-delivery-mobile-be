@@ -1,4 +1,5 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Config } from '@core/config';
@@ -13,6 +14,7 @@ export class SharedModule {
     const sharedModules = [
       TypeOrmModule.forRoot(Config.get.typeORMOptions),
       TypeOrmModule.forFeature(ENTITIES),
+      JwtModule.register({ secret: Config.get.hashKeyForJwtToken }),
       UserModule.forRoot(),
     ];
 

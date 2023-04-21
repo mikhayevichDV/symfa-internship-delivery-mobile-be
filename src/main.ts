@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { join } from 'path';
 
 import { Config } from '@core/config';
@@ -21,7 +22,15 @@ async function bootstrap() {
 
   // Swagger
   const { url, title } = Config.get.swaggerOptions;
-  const config = new DocumentBuilder().setTitle(title).build();
+  const auth: SecuritySchemeObject = {
+    name: 'Authorization',
+    type: 'http',
+    in: 'header',
+    description: 'User token',
+    scheme: 'bearer',
+    bearerFormat: 'JWT',
+  };
+  const config = new DocumentBuilder().setTitle(title).addBearerAuth(auth).build();
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup(url, app, document);

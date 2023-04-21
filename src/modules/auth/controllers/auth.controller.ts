@@ -1,17 +1,18 @@
-import { Body, Get, HttpStatus, Patch, Post, Request } from '@nestjs/common';
+import { Body, Get, HttpStatus, Patch, Post, Req } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserEntity } from '@entities/users';
-import { AuthService } from '@modules/auth/services';
-import { IsAuthenticated } from '@shared/user/decorators';
+import { AuthenticatedUser, IsAuthenticated } from '@shared/user/decorators';
+import { UserService } from '@shared/user/services';
 
 import { AuthControllerDecorator as Controller } from '../decorators';
-import { ApiAuthResponseModel, LoginUserDto } from '../models';
+import { ApiAuthResponseModel, LoginUserDto, UpdateUserDto } from '../models';
+import { AuthService } from '../services';
 
 @Controller()
 @ApiTags('Auth')
 export class AuthController {
-  constructor(private readonly _authService: AuthService) {}
+  constructor(private readonly _authService: AuthService, private readonly _userService: UserService) {}
 
   @ApiResponse({ type: ApiAuthResponseModel })
   @Post('user/login')
@@ -35,7 +36,13 @@ export class AuthController {
 
   @IsAuthenticated()
   @Get('profile')
-  getProfile(@Request() req: any) {
+  getProfile(@Req() req: any) {
     return req.user;
+  }
+
+  @IsAuthenticated()
+  @Patch('update')
+  updateProfile(@AuthenticatedUser() req: any, @Body() { email, address, username }: UpdateUserDto) {
+    return this._userService.update(req, { email, address, username });
   }
 }

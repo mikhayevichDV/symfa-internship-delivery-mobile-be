@@ -5,8 +5,9 @@ import { Repository } from 'typeorm';
 import { Config } from '@core/config';
 import { ProductEntity } from '@entities/product';
 import { UserEntity } from '@entities/users';
+import { UpdateUserDto } from '@modules/auth/models';
 
-import { UserDto, UserEditDto } from '../models';
+import { UserDto } from '../models';
 
 import * as bcrypt from 'bcrypt';
 
@@ -19,14 +20,16 @@ export class UserService {
     private _productRepository: Repository<ProductEntity>,
   ) {}
 
-  async create({ password: plainPassword, email, ...userData }: UserDto) {
+  async create({ password: plainPassword, email, address, ...userData }: UserDto) {
     try {
       const password = await bcrypt.hash(plainPassword, Config.get.hashSalt);
 
       const lastUserId = await this._getLastUserId(this._userRepository);
       const userId = 'SC' + `${+lastUserId.slice(2) + 1}`;
 
-      const user = await this._userRepository.create({ ...userData, userId, email, password });
+      const avatar = { id: '24ff68b-fc3f-4647-8be9-0ea4cc0d4e25' };
+
+      const user = await this._userRepository.create({ ...userData, userId, email, address, password, avatar });
 
       await this._userRepository.save(user);
 
@@ -38,8 +41,8 @@ export class UserService {
     }
   }
 
-  async update(id: string, { avatarId, ...userData }: UserEditDto) {
-    await this._userRepository.update(id, { ...userData, avatar: { id: avatarId } });
+  async update(req: any, { ...updateData }: UpdateUserDto) {
+    await this._userRepository.update(req.user.id, { ...updateData });
   }
 
   private async _getLastUserId(repository: Repository<UserEntity>): Promise<string> {

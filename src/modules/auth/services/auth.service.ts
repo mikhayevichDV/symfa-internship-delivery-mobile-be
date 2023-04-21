@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 
 import { Config } from '@core/config';
 import { UserEntity } from '@entities/users';
+import { UserService } from '@shared/user/services';
 
 import { ApiAuthResponseModel, LoginUserDto } from '../models';
 
@@ -16,6 +17,7 @@ export class AuthService {
     private readonly _jwtService: JwtService,
     @InjectRepository(UserEntity)
     private readonly _authRepository: Repository<UserEntity>,
+    private readonly _userService: UserService,
   ) {}
 
   async login(loginUserDto: LoginUserDto): Promise<ApiAuthResponseModel> {
@@ -55,12 +57,12 @@ export class AuthService {
   }
 
   private _generateJwt(user: any): string {
-    const payload = {
-      email: user.email,
-      sub: user.id,
-    };
+    const payload = { user };
 
-    return this._jwtService.sign(payload);
+    return this._jwtService.sign(payload, {
+      secret: Config.get.hashKeyForJwtToken,
+      expiresIn: '24h',
+    });
   }
 
   private _buildUserResponse(user: any): ApiAuthResponseModel {

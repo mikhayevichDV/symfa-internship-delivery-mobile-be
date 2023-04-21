@@ -38,6 +38,6 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => OrderEntity, (order: OrderEntity) => order.user)
   order: OrderEntity[];
 
-  @OneToOne(() => HistoryEntity, (history: HistoryEntity) => history.user)
+  @OneToMany(() => HistoryEntity, (history: HistoryEntity) => history.user)
   history: HistoryEntity;
 }

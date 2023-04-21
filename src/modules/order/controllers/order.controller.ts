@@ -4,42 +4,47 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AwareIdDto } from '@models/dto';
 import { OrderService } from '@modules/order/services/order.service';
 import { ApiGetProductsModel } from '@modules/products/models';
+import { AuthenticatedUser, IsAuthenticated } from '@shared/user/decorators';
 
 import { OrderController as Controller } from '../decorators';
 
 @Controller()
-@ApiTags('order')
+@ApiTags('Order')
 export class OrderControllers {
   constructor(private readonly _orderService: OrderService) {}
 
-  @Get('get/:id')
+  @IsAuthenticated()
+  @Get('get')
   @ApiResponse({
     status: HttpStatus.OK,
     isArray: true,
   })
-  async getOrder(@Param('id', ParseUUIDPipe) id: string): Promise<any> {
-    return this._orderService.getOrder(id);
+  async getOrder(@AuthenticatedUser() req: any): Promise<any> {
+    return this._orderService.getOrder(req);
   }
 
-  @Get('total/get/:id')
+  @IsAuthenticated()
+  @Get('total/get')
   @ApiResponse({
     status: HttpStatus.OK,
     isArray: true,
   })
-  async getTotal(@Param('id', ParseUUIDPipe) id: string): Promise<any> {
-    return this._orderService.getTotal(id);
+  async getTotal(@AuthenticatedUser() req: any): Promise<any> {
+    return this._orderService.getTotal(req);
   }
 
-  @Post('add/:id')
+  @IsAuthenticated()
+  @Post('add')
   @ApiResponse({
     type: ApiGetProductsModel,
     status: HttpStatus.OK,
     isArray: true,
   })
-  async addToOrder(@Param('id', ParseUUIDPipe) userId: string, @Body() product: AwareIdDto): Promise<any> {
-    return this._orderService.addToOrder(userId, product.id);
+  async addToOrder(@AuthenticatedUser() req: any, @Body() product: AwareIdDto): Promise<any> {
+    return this._orderService.addToOrder(req, product.id);
   }
 
+  @IsAuthenticated()
   @Patch('increment/:id')
   @ApiResponse({
     type: ApiGetProductsModel,
@@ -50,6 +55,7 @@ export class OrderControllers {
     return this._orderService.incrementCount(orderId);
   }
 
+  @IsAuthenticated()
   @Patch('decrement/:id')
   @ApiResponse({
     type: ApiGetProductsModel,

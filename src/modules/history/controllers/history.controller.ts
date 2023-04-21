@@ -1,5 +1,7 @@
-import { Body, Get, HttpStatus, Param, ParseUUIDPipe, Post } from '@nestjs/common';
+import { Body, Get, HttpStatus, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { AuthenticatedUser, IsAuthenticated } from '@shared/user/decorators';
 
 import { HistoryController as Controller } from '../decorators';
 import { CreateHistoryDto } from '../models';
@@ -10,20 +12,22 @@ import { HistoryService } from '../services';
 export class HistoryController {
   constructor(private readonly _historyService: HistoryService) {}
 
-  @Post('create/:id')
+  @IsAuthenticated()
+  @Post('create')
   @ApiResponse({
     status: HttpStatus.OK,
   })
-  async createHistory(@Param('id', ParseUUIDPipe) id: string, @Body() data: CreateHistoryDto) {
-    return this._historyService.create(id, { ...data });
+  async createHistory(@AuthenticatedUser() req: any, @Body() data: CreateHistoryDto) {
+    return this._historyService.create(req, { ...data });
   }
 
-  @Get('get/:id')
+  @IsAuthenticated()
+  @Get('get')
   @ApiResponse({
     status: HttpStatus.OK,
     isArray: true,
   })
-  async getFavoriteProducts(@Param('id', ParseUUIDPipe) id: string): Promise<any> {
-    return this._historyService.getHistory(id);
+  async getHistory(@AuthenticatedUser() req: any): Promise<any> {
+    return this._historyService.getHistory(req);
   }
 }

@@ -1,8 +1,10 @@
-import { Body, Get, HttpStatus, Param, ParseUUIDPipe, Post } from '@nestjs/common';
+import { Body, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { ProductEntity } from '@entities/product';
 import { AwareIdDto } from '@models/dto';
 import { ApiGetProductsModel } from '@modules/products/models';
+import { AuthenticatedUser, IsAuthenticated } from '@shared/user/decorators';
 
 import { FavoriteProductsController as Controller } from '../decorators';
 import { FavoriteProductsService } from '../services';
@@ -12,23 +14,53 @@ import { FavoriteProductsService } from '../services';
 export class FavoriteProductsControllers {
   constructor(private readonly _favoriteProductsService: FavoriteProductsService) {}
 
-  @Get('get/:id')
+  @IsAuthenticated()
+  @Get('get')
   @ApiResponse({
     type: ApiGetProductsModel,
     status: HttpStatus.OK,
     isArray: true,
   })
-  async getFavoriteProducts(@Param('id', ParseUUIDPipe) id: string): Promise<any> {
-    return this._favoriteProductsService.getFavoriteProducts(id);
+  async getFavoriteProducts(@AuthenticatedUser() req: any): Promise<ProductEntity[]> {
+    return this._favoriteProductsService.getFavoriteProducts(req);
   }
 
-  @Post('add/:id')
+  @IsAuthenticated()
+  @Post('add')
   @ApiResponse({
     type: ApiGetProductsModel,
     status: HttpStatus.OK,
     isArray: true,
   })
-  async addFavoriteProduct(@Param('id', ParseUUIDPipe) userId: string, @Body() product: AwareIdDto): Promise<any> {
-    return this._favoriteProductsService.addFavoriteProduct(userId, product.id);
+  async addFavoriteProduct(@AuthenticatedUser() req: any, @Body() product: AwareIdDto): Promise<void> {
+    return this._favoriteProductsService.addFavoriteProduct(req, product.id);
+  }
+
+  @IsAuthenticated()
+  @Get('get/title/:title')
+  @ApiResponse({
+    type: ApiGetProductsModel,
+    status: HttpStatus.OK,
+    isArray: true,
+  })
+  async getFavoriteProductsByTitle(
+    @AuthenticatedUser() req: any,
+    @Param('title') title: string,
+  ): Promise<ProductEntity[]> {
+    return this._favoriteProductsService.getFavoriteProductsByTitle(req, title);
+  }
+
+  @IsAuthenticated()
+  @Get('get/flavourType/:title')
+  @ApiResponse({
+    type: ApiGetProductsModel,
+    status: HttpStatus.OK,
+    isArray: true,
+  })
+  async getFavoriteProductsByFlavourType(
+    @AuthenticatedUser() req: any,
+    @Param('flavourType') flavourType: string,
+  ): Promise<ProductEntity[]> {
+    return this._favoriteProductsService.getFavoriteProductsByFlavourType(req, flavourType);
   }
 }
