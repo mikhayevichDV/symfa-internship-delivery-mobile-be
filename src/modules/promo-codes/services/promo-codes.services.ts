@@ -21,11 +21,15 @@ export class PromoCodesServices {
   }
 
   async getPromocode(code: string) {
-    const queryBuilder = await this._promocodesRepository
-      .createQueryBuilder('promo-codes')
-      .where('promo-codes.code =:code', { code: code })
-      .getOne();
+    try {
+      const queryBuilder = await this._promocodesRepository
+        .createQueryBuilder('promo-codes')
+        .where('promo-codes.code =:code', { code: code })
+        .getOne();
 
-    return queryBuilder.discount;
+      return queryBuilder.discount;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

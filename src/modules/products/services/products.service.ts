@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ProductEntity } from '@entities/product';
+import { QueryGetProductsDto } from '@modules/products/models';
 
 @Injectable()
 export class ProductsService {
@@ -11,7 +12,7 @@ export class ProductsService {
     private _productRepository: Repository<ProductEntity>,
   ) {}
 
-  async getAllProducts() {
+  async getProducts({ types, flavourTypes, title }: QueryGetProductsDto) {
     const queryBuilder = this._productRepository
       .createQueryBuilder('product')
       .select([
@@ -24,10 +25,25 @@ export class ProductsService {
         'product.price',
         'photo',
       ])
-      .innerJoin('product.photo', 'photo')
-      .getMany();
+      .innerJoin('product.photo', 'photo');
 
-    return queryBuilder;
+    if (types) {
+      queryBuilder.where('product.type IN (:...types)', { types });
+    }
+
+    if (flavourTypes) {
+      queryBuilder.orWhere('product.flavourType IN (:...flavourTypes)', { flavourTypes });
+    }
+
+    if (title) {
+      queryBuilder.orWhere('product.title IN (:title)', { title });
+
+      const productByTitle = await queryBuilder.getOne();
+
+      return [productByTitle];
+    }
+
+    return queryBuilder.getMany();
   }
 
   async getProductById(id: string) {
@@ -66,16 +82,6 @@ export class ProductsService {
       .select(['product.flavourType'])
       .distinct(true)
       .getRawMany();
-
-    return queryBuilder;
-  }
-
-  async getProductsByType(type: string): Promise<ProductEntity[]> {
-    const queryBuilder = this._productRepository
-      .createQueryBuilder('product')
-      .leftJoinAndSelect('product.photo', 'photo')
-      .where('product.type = :type', { type: type })
-      .getMany();
 
     return queryBuilder;
   }

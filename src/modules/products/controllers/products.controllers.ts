@@ -1,11 +1,11 @@
-import { Get, HttpStatus, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Get, HttpStatus, Param, ParseUUIDPipe, Query } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { ProductEntity } from '@entities/product';
 import { UserService } from '@shared/user/services';
 
 import { ProductsController as Controller } from '../decorators';
-import { ApiGetProductsModel } from '../models';
+import { ApiGetProductsModel, QueryGetProductsDto } from '../models';
 import { ProductsService } from '../services';
 
 @Controller()
@@ -19,8 +19,8 @@ export class ProductsControllers {
     status: HttpStatus.OK,
     isArray: true,
   })
-  async getAllProducts() {
-    return this._productsService.getAllProducts();
+  async getProducts(@Query() dto: QueryGetProductsDto) {
+    return this._productsService.getProducts(dto);
   }
 
   @Get('id/:id')
@@ -61,16 +61,6 @@ export class ProductsControllers {
   })
   async getFlavourTypes() {
     return this._productsService.getFlavourTypes();
-  }
-
-  @Get('type/:type')
-  @ApiResponse({
-    type: ApiGetProductsModel,
-    status: HttpStatus.OK,
-    isArray: true,
-  })
-  async getProductsByType(@Param('type') type: string): Promise<ProductEntity[]> {
-    return this._productsService.getProductsByType(type);
   }
 
   @Get('flavourType/:flavourType')
