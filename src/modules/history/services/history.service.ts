@@ -91,11 +91,11 @@ export class HistoryService {
         }
 
         this._historyRepository.update(history.id, { deliveryTime: time });
-      }, 1000);
+      }, 60000);
 
       setTimeout(() => {
         clearInterval(timerId);
-      }, 1000 * history.deliveryTime + 1000);
+      }, 60000 * history.deliveryTime + 1000);
     } catch (error) {
       throw new BadRequestException(`${error}`);
     }

@@ -21,6 +21,7 @@ export class ProductsService {
         'product.type',
         'product.flavourType',
         'product.description',
+        'product.deliveryTime',
         'product.rating',
         'product.price',
         'product.photo',
