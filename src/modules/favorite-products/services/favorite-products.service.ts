@@ -2,68 +2,56 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ProductEntity } from '@entities/product';
-import { UserEntity } from '@entities/users';
+import { FavoriteProductsEntity } from '@entities/favorite-products';
+import { QueryGetProductsDto } from '@modules/products/models';
 
 @Injectable()
 export class FavoriteProductsService {
   constructor(
-    @InjectRepository(UserEntity)
-    private _userRepository: Repository<UserEntity>,
+    @InjectRepository(FavoriteProductsEntity)
+    private _favoriteProductsRepository: Repository<FavoriteProductsEntity>,
   ) {}
 
-  async getFavoriteProducts(req: any): Promise<ProductEntity[]> {
-    const products = await this._userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.favoriteProducts', 'products')
-      .leftJoinAndSelect('products.photo', 'photo')
-      .where('user.id = :id', { id: req.user.id })
-      .getMany();
+  async getFavoriteProducts(req: any, { flavourTypes, title }: QueryGetProductsDto): Promise<any> {
+    const favoriteProducts = await this._favoriteProductsRepository
+      .createQueryBuilder(`favorite_products`)
+      .leftJoin('favorite_products.user', 'user')
+      .leftJoinAndSelect('favorite_products.product', 'product')
+      .where('user.id = :id', { id: req.user.id });
 
-    return products
-      .map((elem: UserEntity) => {
-        return elem.favoriteProducts;
-      })
-      .flat(1);
+    if (flavourTypes) {
+      favoriteProducts.andWhere('product.flavourType IN (:...flavourTypes)', { flavourTypes });
+    }
+
+    if (title) {
+      favoriteProducts.andWhere('product.title LIKE :title', { title: `%${title}%` });
+    }
+
+    const result = await favoriteProducts.getMany();
+
+    return result.map((elem: FavoriteProductsEntity) => {
+      return elem.product;
+    });
   }
 
-  async addFavoriteProduct(req: any, productId: string): Promise<void> {
-    const user = await this._userRepository.findOne({ where: { id: req.user.id }, relations: ['favoriteProducts'] });
+  async addFavoriteProduct(req: any, productId: string): Promise<any> {
+    const favProductExist = await this._favoriteProductsRepository.findOne({
+      where: { user: { id: req.user.id }, product: { id: productId } },
+    });
 
-    user.favoriteProducts.push({ id: productId } as unknown as ProductEntity);
+    const favProduct = this._favoriteProductsRepository.create({
+      user: { id: req.user.id },
+      product: { id: productId },
+    });
 
-    await this._userRepository.save(user);
-  }
+    if (favProductExist) {
+      return await this._favoriteProductsRepository
+        .createQueryBuilder('favorite_products')
+        .delete()
+        .where('favorite_products.id =:id', { id: favProductExist.id })
+        .execute();
+    }
 
-  async getFavoriteProductsByTitle(req: any, title: string): Promise<ProductEntity[]> {
-    const products = await this._userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.favoriteProducts', 'products')
-      .leftJoinAndSelect('products.photo', 'photo')
-      .where('user.id = :id', { id: req.user.id })
-      .where('products.title = :title', { title: title })
-      .getMany();
-
-    return products
-      .map((elem: UserEntity) => {
-        return elem.favoriteProducts;
-      })
-      .flat(1);
-  }
-
-  async getFavoriteProductsByFlavourType(req: any, flavourType: string): Promise<ProductEntity[]> {
-    const products = await this._userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.favoriteProducts', 'products')
-      .leftJoinAndSelect('products.photo', 'photo')
-      .where('user.id = :id', { id: req.user.id })
-      .where('products.flavourType = :flavourType', { flavourType: flavourType })
-      .getMany();
-
-    return products
-      .map((elem: UserEntity) => {
-        return elem.favoriteProducts;
-      })
-      .flat(1);
+    return await this._favoriteProductsRepository.save(favProduct);
   }
 }

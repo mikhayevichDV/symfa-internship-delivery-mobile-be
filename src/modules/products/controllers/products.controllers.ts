@@ -19,7 +19,7 @@ export class ProductsControllers {
     status: HttpStatus.OK,
     isArray: true,
   })
-  async getProducts(@Query() dto: QueryGetProductsDto) {
+  async getProducts(@Query() dto: QueryGetProductsDto): Promise<any> {
     return this._productsService.getProducts(dto);
   }
 
@@ -31,16 +31,6 @@ export class ProductsControllers {
   })
   async getProductById(@Param('id', ParseUUIDPipe) id: string): Promise<ProductEntity> {
     return this._productsService.getProductById(id);
-  }
-
-  @Get('title/:title')
-  @ApiResponse({
-    type: ApiGetProductsModel,
-    status: HttpStatus.OK,
-    isArray: true,
-  })
-  async getProductByTitle(@Param('title') title: string): Promise<ProductEntity> {
-    return this._productsService.getProductByTitle(title);
   }
 
   @Get('types')
@@ -61,15 +51,5 @@ export class ProductsControllers {
   })
   async getFlavourTypes() {
     return this._productsService.getFlavourTypes();
-  }
-
-  @Get('flavourType/:flavourType')
-  @ApiResponse({
-    type: ApiGetProductsModel,
-    status: HttpStatus.OK,
-    isArray: true,
-  })
-  async getProductsByFlavourType(@Param('flavourType') flavourType: string): Promise<ProductEntity[]> {
-    return this._productsService.getProductsByFlavourType(flavourType);
   }
 }

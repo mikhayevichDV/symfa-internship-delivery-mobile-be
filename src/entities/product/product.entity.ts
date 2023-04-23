@@ -1,8 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToMany, OneToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 import { BaseEntity } from '@entities/common';
-import { ProductPhotoEntity } from '@entities/product-photo';
-import { UserEntity } from '@entities/users';
 
 @Entity('product')
 export class ProductEntity extends BaseEntity {
@@ -27,10 +25,6 @@ export class ProductEntity extends BaseEntity {
   @Column({ type: 'float', name: 'price' })
   price: number;
 
-  @OneToOne(() => ProductPhotoEntity)
-  @JoinColumn()
-  photo: ProductPhotoEntity;
-
-  @ManyToMany(() => UserEntity, (users: UserEntity) => users.favoriteProducts)
-  users: UserEntity[];
+  @Column({ type: 'varchar', name: 'photo' })
+  photo: string;
 }

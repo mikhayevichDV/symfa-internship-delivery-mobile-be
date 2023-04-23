@@ -12,7 +12,7 @@ export class ProductsService {
     private _productRepository: Repository<ProductEntity>,
   ) {}
 
-  async getProducts({ types, flavourTypes, title }: QueryGetProductsDto) {
+  async getProducts({ types, title }: QueryGetProductsDto): Promise<any> {
     const queryBuilder = this._productRepository
       .createQueryBuilder('product')
       .select([
@@ -23,24 +23,15 @@ export class ProductsService {
         'product.description',
         'product.rating',
         'product.price',
-        'photo',
-      ])
-      .innerJoin('product.photo', 'photo');
+        'product.photo',
+      ]);
 
     if (types) {
-      queryBuilder.where('product.type IN (:...types)', { types });
-    }
-
-    if (flavourTypes) {
-      queryBuilder.orWhere('product.flavourType IN (:...flavourTypes)', { flavourTypes });
+      queryBuilder.andWhere('product.type IN (:...types)', { types });
     }
 
     if (title) {
-      queryBuilder.orWhere('product.title IN (:title)', { title });
-
-      const productByTitle = await queryBuilder.getOne();
-
-      return [productByTitle];
+      queryBuilder.andWhere('product.title LIKE :title', { title: `%${title}%` });
     }
 
     return queryBuilder.getMany();
@@ -49,18 +40,7 @@ export class ProductsService {
   async getProductById(id: string) {
     const queryBuilder = this._productRepository
       .createQueryBuilder('product')
-      .leftJoinAndSelect('product.photo', 'photo')
       .where('product.id = :id', { id: id })
-      .getOne();
-
-    return queryBuilder;
-  }
-
-  async getProductByTitle(title: string) {
-    const queryBuilder = this._productRepository
-      .createQueryBuilder('product')
-      .leftJoinAndSelect('product.photo', 'photo')
-      .where('product.title = :title', { title: title })
       .getOne();
 
     return queryBuilder;
@@ -82,16 +62,6 @@ export class ProductsService {
       .select(['product.flavourType'])
       .distinct(true)
       .getRawMany();
-
-    return queryBuilder;
-  }
-
-  async getProductsByFlavourType(flavourType: string): Promise<ProductEntity[]> {
-    const queryBuilder = this._productRepository
-      .createQueryBuilder('product')
-      .leftJoinAndSelect('product.photo', 'photo')
-      .where('product.flavourType = :flavourType', { flavourType: flavourType })
-      .getMany();
 
     return queryBuilder;
   }

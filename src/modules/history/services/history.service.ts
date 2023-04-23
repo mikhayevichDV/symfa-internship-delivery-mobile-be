@@ -36,7 +36,6 @@ export class HistoryService {
       ])
       .leftJoinAndSelect('history.user', 'user')
       .leftJoinAndSelect('history.courier', 'courier')
-      .leftJoinAndSelect('courier.avatar', 'avatar')
       .where('history.user = :id', { id: req.user.id })
       .orderBy('history.updatedAt', 'DESC')
       .getMany();

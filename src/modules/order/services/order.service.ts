@@ -16,7 +16,6 @@ export class OrderService {
       .createQueryBuilder('order')
       .leftJoinAndSelect('order.user', 'user')
       .leftJoinAndSelect('order.product', 'product')
-      .leftJoinAndSelect('product.photo', 'photo')
       .where('order.user = :id', { id: req.user.id })
       .getMany();
 

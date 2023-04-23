@@ -1,10 +1,9 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 import { BaseEntity } from '@entities/common';
+import { FavoriteProductsEntity } from '@entities/favorite-products';
 import { HistoryEntity } from '@entities/history';
 import { OrderEntity } from '@entities/order';
-import { ProductEntity } from '@entities/product';
-import { UserAvatarEntity } from '@entities/user-avatar';
 import { UserRole } from '@models/enum';
 
 @Entity('user')
@@ -27,16 +26,14 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'enum', name: 'user_role', enum: UserRole, default: UserRole.Client })
   role: UserRole;
 
-  @OneToOne(() => UserAvatarEntity)
-  @JoinColumn()
-  avatar: UserAvatarEntity;
-
-  @ManyToMany(() => ProductEntity, (products: ProductEntity) => products.users)
-  @JoinTable()
-  favoriteProducts: ProductEntity[];
+  @Column({ type: 'varchar', name: 'avatar', nullable: true })
+  avatar: string;
 
   @OneToMany(() => OrderEntity, (order: OrderEntity) => order.user)
   order: OrderEntity[];
+
+  @OneToMany(() => FavoriteProductsEntity, (favorites: FavoriteProductsEntity) => favorites.user)
+  favorites: FavoriteProductsEntity[];
 
   @OneToMany(() => HistoryEntity, (history: HistoryEntity) => history.user)
   history: HistoryEntity;

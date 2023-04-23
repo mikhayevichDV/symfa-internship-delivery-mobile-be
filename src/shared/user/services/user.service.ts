@@ -27,7 +27,7 @@ export class UserService {
       const lastUserId = await this._getLastUserId(this._userRepository);
       const userId = 'SC' + `${+lastUserId.slice(2) + 1}`;
 
-      const avatar = { id: '24ff68b-fc3f-4647-8be9-0ea4cc0d4e25' };
+      const avatar = 'user-avatar/female4.jpg';
 
       const user = await this._userRepository.create({ ...userData, userId, email, address, password, avatar });
 
@@ -56,11 +56,7 @@ export class UserService {
   }
 
   async _getUserById(inputId: string): Promise<UserEntity> {
-    const user = this._userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.avatar', 'avatar')
-      .where('user.id = :id', { id: inputId })
-      .getOne();
+    const user = this._userRepository.createQueryBuilder('user').where('user.id = :id', { id: inputId }).getOne();
 
     return user;
   }
